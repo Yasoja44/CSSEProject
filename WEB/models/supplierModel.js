@@ -1,10 +1,10 @@
 class Supplier{
-    constructor(id,name,company,speciality,pic){
-        this.id = id;
-        this.name = name;
-        this.company = company;
-        this.speciality = speciality;
-        this.pic = pic;
+    constructor(supplierId,supplierName,supplierCompany,supplierSpeciality,supplierPic){
+        this.supplierId = supplierId;
+        this.supplierName = supplierName;
+        this.supplierCompany = supplierCompany;
+        this.supplierSpeciality = supplierSpeciality;
+        this.supplierPic = supplierPic;
     }
 }
 

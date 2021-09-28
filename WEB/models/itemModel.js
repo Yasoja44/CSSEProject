@@ -1,10 +1,11 @@
 class Item{
-    constructor(id,name,company,speciality,pic){
-        this.id = id;
-        this.name = name;
-        this.company = company;
-        this.speciality = speciality;
-        this.pic = pic;
+    constructor(itemId,itemSupplierId,itemName,itemPrice,itemPic,itemPolicyFlag){
+        this.itemId = itemId;
+        this.itemSupplierId = itemSupplierId;
+        this.itemName = itemName;
+        this.itemPrice = itemPrice;
+        this.itemPic = itemPic;
+        this.itemPolicyFlag = itemPolicyFlag;
     }
 }
 

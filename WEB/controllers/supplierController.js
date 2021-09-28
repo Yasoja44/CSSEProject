@@ -24,11 +24,11 @@ const getAllSuppliers = async(req,res,next) => {
         }else{
             data.forEach(doc =>{
                 const Supplier = new supplier(
-                    doc.id,
-                    doc.data().name,
-                    doc.data().company,
-                    doc.data().speciality,
-                    doc.data().pic
+                    doc.supplierId,
+                    doc.data().supplierName,
+                    doc.data().supplierCompany,
+                    doc.data().supplierSpeciality,
+                    doc.data().supplierPic
                 );
                 supplierArray.push(Supplier);
             });
