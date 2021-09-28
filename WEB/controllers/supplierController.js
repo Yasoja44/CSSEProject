@@ -24,7 +24,7 @@ const getAllSuppliers = async(req,res,next) => {
         }else{
             data.forEach(doc =>{
                 const Supplier = new supplier(
-                    doc.supplierId,
+                    doc.id,
                     doc.data().supplierName,
                     doc.data().supplierCompany,
                     doc.data().supplierSpeciality,

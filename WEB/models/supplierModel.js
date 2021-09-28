@@ -1,6 +1,6 @@
 class Supplier{
-    constructor(supplierId,supplierName,supplierCompany,supplierSpeciality,supplierPic){
-        this.supplierId = supplierId;
+    constructor(id,supplierName,supplierCompany,supplierSpeciality,supplierPic){
+        this.id = id;
         this.supplierName = supplierName;
         this.supplierCompany = supplierCompany;
         this.supplierSpeciality = supplierSpeciality;

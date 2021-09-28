@@ -1,6 +1,6 @@
 class Item{
-    constructor(itemId,itemSupplierId,itemName,itemPrice,itemPic,itemPolicyFlag){
-        this.itemId = itemId;
+    constructor(id,itemSupplierId,itemName,itemPrice,itemPic,itemPolicyFlag){
+        this.id = id;
         this.itemSupplierId = itemSupplierId;
         this.itemName = itemName;
         this.itemPrice = itemPrice;
