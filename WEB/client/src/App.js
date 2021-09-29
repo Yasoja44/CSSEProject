@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import addSupplier from './components/forms/addSupplier';
 import getSuppliers from './components/views/viewsSuppliers';
+import addPolicyOne from './components/forms/addPolicyOne';
 
 function App() {
   return (
@@ -11,8 +12,9 @@ function App() {
           <Router>
             <section>
               <Switch>
-                <Route path="/addSupplier" component={addSupplier}  />
+                  <Route path="/addSupplier" component={addSupplier}  />
                   <Route path="/getSuppliers" component={getSuppliers}  />
+                  <Route path="/addPolicyOne" component={addPolicyOne}  />
               </Switch>
             </section>
           </Router>
