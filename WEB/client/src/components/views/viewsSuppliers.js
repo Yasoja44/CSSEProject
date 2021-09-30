@@ -43,23 +43,24 @@ class viewsSuppliers extends Component {
     deleteCategory(id){
         axios.delete(`http://localhost:8080/suppliers/${id}`)
             .then(response => {
-                this.setState({ suppliers: response.data.data });
+                this.setState({ suppliers: response.data });
             })
         SubmissionAlert();
         window.location.replace("/adminViewStockCategory");
     }
 
     navigateEditStockCategoryPage(e, categoryStockId) {
-        window.location = `/adminEditStockCategory/${categoryStockId}`
+        window.location = `/editItem/${categoryStockId}`
     }
 
+
     navigateAddStockCategoryItemsPage(e, categoryStockId) {
-        window.location = `/adminCreateStockItems/${categoryStockId}`
+        window.location = `/addSupplierItems/${categoryStockId}`
 
     }
 
     navigateViewItemsPage(e, categoryStockId) {
-        window.location = `/adminViewStockItem/${categoryStockId}`
+        window.location = `/getSupplierItems/${categoryStockId}`
 
 
     }
@@ -75,7 +76,7 @@ class viewsSuppliers extends Component {
                                     <Col>
                                         <Card className="category-card">
                                             <div align="right">
-                                                <button className="btn btn-outline-danger" onClick={e => this.deleteCategory(item._id)}><i
+                                                <button className="btn btn-outline-danger" onClick={e => this.deleteCategory(item.id)}><i
                                                     className="fas fa-times"></i></button>
                                             </div>
                                             <Card.Img variant="top" img src={item.supplierPic} alt="Category"  className="center card-img-top item_img-zoom w3-card-4"/>
@@ -90,11 +91,11 @@ class viewsSuppliers extends Component {
                                                 </Card.Text>
                                             </Card.Body>
                                             <Card.Footer className="item-footer-button">
-                                                <button className="btn btn-success add-item" onClick={e => this.navigateAddStockCategoryItemsPage(e, item._id)}>Add an Item</button>
+                                                <button className="btn btn-success add-item" onClick={e => this.navigateAddStockCategoryItemsPage(e, item.id)}>Add an Item</button>
                                                 &nbsp; &nbsp;
-                                                <button className="btn btn-primary" onClick={e => this.navigateViewItemsPage(e,item._id)}>Go To Items</button>
+                                                <button className="btn btn-primary" onClick={e => this.navigateViewItemsPage(e,item.id)}>Go To Items</button>
                                                 &nbsp; &nbsp;
-                                                <button className="btn btn-warning edit-item" onClick={e => this.navigateEditStockCategoryPage(e, item._id)}>
+                                                <button className="btn btn-warning edit-item" onClick={e => this.navigateEditStockCategoryPage(e, item.id)}>
                                                     <i className="fas fa-edit">&nbsp;</i>Edit</button>
                                             </Card.Footer>
                                         </Card>
