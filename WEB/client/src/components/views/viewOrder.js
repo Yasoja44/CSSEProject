@@ -2,6 +2,35 @@ import React, { Component} from 'react';
 import axios from 'axios';
 import '../css/commonViewsCSS.css';
 import {Card, Col, Row} from 'react-bootstrap';
+import swat from "sweetalert2";
+
+const SubmissionAlert1 = () => {
+    swat.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Order Accepted!',
+        showConfirmButton: false,
+        timer: 3000
+    });
+}
+
+const SubmissionAlert2 = () => {
+    swat.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Order Declined!',
+        showConfirmButton: false,
+        timer: 3000
+    });
+}
+
+const SubmissionFail = (message) => {
+    swat.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: message
+    })
+}
 
 class viewOrder extends Component {
     constructor(props) {
@@ -20,6 +49,40 @@ class viewOrder extends Component {
 
     navigateViewItemsPage(e, categoryStockId) {
         window.location = `/orderViewStockItem/${categoryStockId}`
+    }
+
+    acceptOrder(e,id) {
+
+        let order = {
+            status:'Accepted',
+        };
+
+        axios.put(`http://localhost:8080/api/order/${id}`, order)
+            .then(response => {
+                SubmissionAlert1();
+                window.location.reload(false);
+            })
+            .catch(error => {
+                console.log(error.message);
+                SubmissionFail();
+            })
+    }
+
+    declineOrder(e,id) {
+
+        let order = {
+            status:'Declined',
+        };
+
+        axios.put(`http://localhost:8080/api/order/${id}`, order)
+            .then(response => {
+                SubmissionAlert2();
+                window.location.reload(false);
+            })
+            .catch(error => {
+                console.log(error.message);
+                SubmissionFail();
+            })
     }
 
 
@@ -51,7 +114,9 @@ class viewOrder extends Component {
 
                                             </Card.Body>
                                             <Card.Footer className="item-footer-button">
-                                                <button className="btn btn-primary" onClick={e => this.navigateViewItemsPage(e,item.id)}>Go To Items</button>
+                                                <button className="btn btn-primary" onClick={e => this.navigateViewItemsPage(e,item.id)}>Items</button>&nbsp;&nbsp;
+                                                <button className="btn btn-warning" onClick={e => this.acceptOrder(e,item.id)}>Accept</button>&nbsp;&nbsp;
+                                                <button className="btn btn-danger" onClick={e => this.declineOrder(e,item.id)}>Decline</button>
                                             </Card.Footer>
                                         </Card>
                                         <br/>

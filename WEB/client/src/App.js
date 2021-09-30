@@ -10,6 +10,7 @@ import EditSupplierAdmin from "./components/forms/EditSupplierAdmin";
 import viewSuppliersPolicy from "./components/views/viewSuppliersPolicy";
 import policyViewStockItem from "./components/views/viewSuppliersItemPolicy";
 import viewOrder from "./components/views/viewOrder";
+import viewOrderItems from "./components/views/viewOrderItems";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                   <Route path="/viewSuppliersPolicy" component={viewSuppliersPolicy}  />
                   <Route path="/policyViewStockItem/:id" component={policyViewStockItem}  />
                   <Route path="/viewOrder" component={viewOrder}  />
+                  <Route path="/orderViewStockItem/:id" component={viewOrderItems}  />
               </Switch>
             </section>
           </Router>

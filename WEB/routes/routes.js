@@ -8,6 +8,7 @@ const {addSupplier,getAllSuppliers,getOneSupplier,updateSupplier,deleteSupplier}
 const {addItem} = require('../controllers/itemController')
 const {addPolicy,getAllPolicyOne,getOnePolicyOne,updatePolicyOne,deletePolicyOne} = require('../controllers/policyOneController');
 const {getAllOrders,getOneOrder,updateOrder,} = require('../controllers/OrderController');
+const {getAllItemsByOrder} = require('../controllers/orderItemController');
 
 
 
@@ -41,6 +42,9 @@ router.delete('/policyOne/:id',deletePolicyOne);
 router.get('/orders',getAllOrders);
 router.get('/order/:id',getOneOrder);
 router.put('/order/:id',updateOrder);
+
+//order item routes
+router.get('/getItemsByOrder/:id',getAllItemsByOrder);
 
 
 
