@@ -58,7 +58,7 @@ const updatePolicyOne= async(req,res,next) => {
 
         const policyOne = await firestore.collection('policyOne').doc(id);
         await policyOne.update(data);
-        res.status(404).send('Policy one data updated successfully');
+        res.status(200).send('Policy one data updated successfully');
 
     }catch(error){
         res.status(400).send(error.message);
@@ -71,7 +71,7 @@ const deletePolicyOne = async(req,res,next) => {
 
 
         await firestore.collection('policyOne').doc(id).delete();
-        res.status(404).send('Policy one data deleted successfully');
+        res.status(200).send('Policy one data deleted successfully');
 
     }catch(error){
         res.status(400).send(error.message);

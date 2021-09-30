@@ -61,7 +61,7 @@ const updateSupplier= async(req,res,next) => {
 
         const supplier = await firestore.collection('suppliers').doc(id);
         await supplier.update(data);
-        res.status(404).send('Supplier data updated successfully');
+        res.status(200).send('Supplier data updated successfully');
 
     }catch(error){
         res.status(400).send(error.message);
@@ -74,7 +74,7 @@ const deleteSupplier = async(req,res,next) => {
 
 
         await firestore.collection('suppliers').doc(id).delete();
-        res.status(404).send('Supplier data deleted successfully');
+        res.status(200).send('Supplier data deleted successfully');
 
     }catch(error){
         res.status(400).send(error.message);

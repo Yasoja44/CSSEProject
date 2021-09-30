@@ -63,7 +63,7 @@ const updateItem= async(req,res,next) => {
 
         const item = await firestore.collection('items').doc(id);
         await item.update(data);
-        res.status(404).send('Item data updated successfully');
+        res.status(200).send('Item data updated successfully');
 
     }catch(error){
         res.status(400).send(error.message);
@@ -74,7 +74,7 @@ const deleteItem = async(req,res,next) => {
     try{
         const id = req.params.id;
         await firestore.collection('items').doc(id).delete();
-        res.status(404).send('Item data deleted successfully');
+        res.status(200).send('Item data deleted successfully');
 
     }catch(error){
         res.status(400).send(error.message);
