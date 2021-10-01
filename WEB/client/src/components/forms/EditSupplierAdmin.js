@@ -30,6 +30,7 @@ const initialState = {
     supplierName: '',
     supplierCompany: '',
     supplierSpeciality:'',
+    supplierEmail:'',
     supplierPic:null,
     image:'',
     progress:0,
@@ -38,6 +39,7 @@ const initialState = {
         supplierName: false,
         supplierCompany: false,
         supplierSpeciality: false,
+        supplierEmail:false,
     }
 }
 
@@ -59,6 +61,8 @@ class EditSupplierAdmin extends Component {
                         supplierName: response.data.supplierName,
                         supplierCompany: response.data.supplierCompany,
                         supplierSpeciality: response.data.supplierSpeciality,
+                        supplierEmail: response.data.supplierSpeciality,
+
 
                     });
             })
@@ -87,11 +91,12 @@ class EditSupplierAdmin extends Component {
         });
     }
 
-    validate =(supplierName,supplierCompany,supplierSpeciality)=> {
+    validate =(supplierName,supplierCompany,supplierSpeciality,supplierEmail)=> {
         const errors = {
             supplierName: '',
             supplierCompany: '',
             supplierSpeciality:'',
+            supplierEmail:'',
         };
         if (this.state.touched.supplierName && supplierName.length < 3)
             errors.supplierName = 'Name should be >= 3 characters';
@@ -101,6 +106,9 @@ class EditSupplierAdmin extends Component {
 
         if (this.state.touched.supplierSpeciality && supplierSpeciality.length < 3)
             errors.supplierSpeciality = 'Speciality should be >= 3 characters';
+
+        if (this.state.touched.supplierEmail && supplierEmail.length < 3)
+            errors.supplierEmail = 'Speciality should be >= 3 characters';
 
         return errors;
     }
@@ -112,12 +120,13 @@ class EditSupplierAdmin extends Component {
                 supplierName: this.state.supplierName,
                 supplierCompany: this.state.supplierCompany,
                 supplierSpeciality: this.state.supplierSpeciality,
+                supplierEmail: this.state.supplierEmail,
 
         };
 
 
-    if (this.state.supplierName.length < 3 || this.state.supplierSpeciality.length < 3 || this.state.supplierCompany.length < 3) {
-    this.validate(this.state.supplierName, this.state.supplierCompany, this.state.supplierSpeciality)
+    if (this.state.supplierName.length < 3 || this.state.supplierSpeciality.length < 3 || this.state.supplierCompany.length < 3 || this.state.supplierEmail.length < 3) {
+    this.validate(this.state.supplierName, this.state.supplierCompany, this.state.supplierSpeciality,this.state.supplierEmail)
     }
         else
         {
@@ -134,13 +143,13 @@ class EditSupplierAdmin extends Component {
     }
 
     render() {
-        const errors=this.validate(this.state.supplierName,this.state.supplierCompany,this.state.supplierSpeciality);
+        const errors=this.validate(this.state.supplierName,this.state.supplierCompany,this.state.supplierSpeciality,this.state.supplierEmail);
 
         return (
             <div className="workout_wrapper" style={{ borderTop: "10px solid black"}}>
                 <br/><br/>
                 <Form onSubmit={this.onSubmit}>
-                    <h1 className="workout_title">Edit SUPPLIER</h1>
+                    <h1 className="workout_title">ADD SUPPLIER</h1>
                     &nbsp;
                     <div className="row justify-content-md-center">
                         <FormGroup >
@@ -199,6 +208,25 @@ class EditSupplierAdmin extends Component {
                             </div>
                         </FormGroup>
                     </div>
+                    <div className="row justify-content-md-center">
+                        <FormGroup >
+                            <Label for="workout_description">Supplier Email</Label>
+                            <div>
+                                <Input
+                                    type="text"
+                                    name="supplierEmail"
+                                    id="supplierEmail"
+                                    size="160"
+                                    value={this.state.supplierEmail}
+                                    onChange={this.onChange}
+                                    valid={errors.supplierEmail === ''}
+                                    invalid={errors.supplierEmail !== ''}
+                                    onBlur={this.handleBlur('supplierEmail')}
+                                />
+                                <FormFeedback>{errors.supplierEmail}</FormFeedback>
+                            </div>
+                        </FormGroup>
+                    </div>
 
                     {/*<div className="row justify-content-center">*/}
                     {/*    <div>*/}
@@ -207,6 +235,7 @@ class EditSupplierAdmin extends Component {
 
                     {/*    </div>*/}
                     {/*</div>*/}
+                    &nbsp;
 
                     <button className="workout_button btn btn-primary">SUBMIT</button>
                 </Form>

@@ -16,6 +16,7 @@ const initialState = {
     supplierName: '',
     supplierCompany: '',
     supplierSpeciality:'',
+    supplierEmail:'',
     supplierPic:null,
     image:'',
     progress:0,
@@ -26,6 +27,7 @@ const initialState = {
         supplierName: false,
         supplierCompany: false,
         supplierSpeciality:false,
+        supplierEmail:false,
         supplierPic:false,
     }
 }
@@ -119,20 +121,24 @@ class addSupplier extends Component {
         });
     }
 
-    validate =(supplierName,supplierCompany,supplierSpeciality)=> {
+    validate =(supplierName,supplierCompany,supplierSpeciality,supplierEmail)=> {
         const errors = {
             supplierName: '',
             supplierCompany: '',
             supplierSpeciality:'',
+            supplierEmail:'',
         };
         if (this.state.touched.supplierName && supplierName.length < 3)
-            errors.workout_name = 'Name should be >= 3 characters';
+            errors.supplierName = 'Name should be >= 3 characters';
 
         if (this.state.touched.supplierCompany && supplierCompany.length < 3)
-            errors.workout_theme = 'Company should be >= 3 characters';
+            errors.supplierCompany = 'Company should be >= 3 characters';
 
         if (this.state.touched.supplierSpeciality && supplierSpeciality.length < 3)
-            errors.workout_description = 'Speciality should be >= 3 characters';
+            errors.supplierSpeciality = 'Speciality should be >= 3 characters';
+
+        if (this.state.touched.supplierEmail && supplierEmail.length < 3)
+            errors.supplierEmail = 'Speciality should be >= 3 characters';
 
         return errors;
     }
@@ -170,7 +176,8 @@ class addSupplier extends Component {
                                 supplierName: this.state.supplierName,
                                 supplierCompany: this.state.supplierCompany,
                                 supplierSpeciality: this.state.supplierSpeciality,
-                                supplierPic: url
+                                supplierEmail: this.state.supplierEmail,
+                                supplierPic: url,
                             }
 
                         });
@@ -184,8 +191,8 @@ class addSupplier extends Component {
 
     submit2(){
         if (this.state.supplierName.length < 3 || this.state.supplierSpeciality.length < 3 ||
-            this.state.supplierCompany.length < 3) {
-            this.validate(this.state.supplierName, this.state.supplierCompany, this.state.supplierSpeciality)
+            this.state.supplierCompany.length < 3 || this.state.supplierCompany.length < 3 ) {
+            this.validate(this.state.supplierName, this.state.supplierCompany, this.state.supplierSpeciality,this.state.supplierEmail)
             let message = "Supplier Creation Failed"
             SubmissionFail2(message);
         } else {
@@ -203,6 +210,7 @@ class addSupplier extends Component {
                 .then(response => {
                     console.log('DATA TO SEND', this.state.supplier);
                     SubmissionAlert();
+                    window.location.replace("/getSuppliers");
 
                 })
                 .catch(error => {
@@ -213,7 +221,7 @@ class addSupplier extends Component {
     }
 
     render() {
-        const errors=this.validate(this.state.supplierName,this.state.supplierCompany,this.state.supplierSpeciality);
+        const errors=this.validate(this.state.supplierName,this.state.supplierCompany,this.state.supplierSpeciality,this.state.supplierEmail);
 
         return (
             <div className="workout_wrapper" style={{ borderTop: "10px solid black"}}>
@@ -275,6 +283,25 @@ class addSupplier extends Component {
                                     onBlur={this.handleBlur('supplierSpeciality')}
                                 />
                                 <FormFeedback>{errors.supplierSpeciality}</FormFeedback>
+                            </div>
+                        </FormGroup>
+                    </div>
+                    <div className="row justify-content-md-center">
+                        <FormGroup >
+                            <Label for="workout_description">Supplier Email</Label>
+                            <div>
+                                <Input
+                                    type="text"
+                                    name="supplierEmail"
+                                    id="supplierEmail"
+                                    size="160"
+                                    value={this.state.supplierEmail}
+                                    onChange={this.onChange}
+                                    valid={errors.supplierEmail === ''}
+                                    invalid={errors.supplierEmail !== ''}
+                                    onBlur={this.handleBlur('supplierEmail')}
+                                />
+                                <FormFeedback>{errors.supplierEmail}</FormFeedback>
                             </div>
                         </FormGroup>
                     </div>

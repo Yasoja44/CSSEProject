@@ -188,7 +188,7 @@ class addSupplier extends Component {
                 .then(response => {
                     console.log('DATA TO SEND', this.state.item);
                     SubmissionAlert();
-
+                    window.location.replace("/getSuppliers");
                 })
                 .catch(error => {
                     console.log(error.message);

@@ -28,6 +28,7 @@ const getAllSuppliers = async(req,res,next) => {
                     doc.data().supplierName,
                     doc.data().supplierCompany,
                     doc.data().supplierSpeciality,
+                    doc.data().supplierEmail,
                     doc.data().supplierPic
                 );
                 supplierArray.push(Supplier);

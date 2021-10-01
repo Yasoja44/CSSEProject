@@ -87,7 +87,8 @@ class viewsSuppliers extends Component {
                                                 </Card.Title>
                                                 <Card.Text>
                                                     <h4>{item.supplierCompany}</h4>
-                                                    <h6>{item.supplierSpeciality}</h6>
+                                                    <h5>{item.supplierSpeciality}</h5>
+                                                    <h5>{item.supplierEmail}</h5>
                                                 </Card.Text>
                                             </Card.Body>
                                             <Card.Footer className="item-footer-button">

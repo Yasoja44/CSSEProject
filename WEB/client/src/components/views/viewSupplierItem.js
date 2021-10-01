@@ -44,7 +44,6 @@ class AdminStockItemsView extends Component {
                 window.location.replace("/getSuppliers");
 
             })
-        window.location.replace("/adminViewStockCategory");
         SubmissionAlert();
     }
 
