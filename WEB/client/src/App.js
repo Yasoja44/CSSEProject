@@ -7,10 +7,7 @@ import addPolicyOne from './components/forms/addPolicyOne';
 import addSupplierItems from "./components/forms/addSupplierItems";
 import viewSupplierItem from "./components/views/viewSupplierItem";
 import EditSupplierAdmin from "./components/forms/EditSupplierAdmin";
-import viewSuppliersPolicy from "./components/views/viewSuppliersPolicy";
-import policyViewStockItem from "./components/views/viewSuppliersItemPolicy";
-import viewOrder from "./components/views/viewOrder";
-import viewOrderItems from "./components/views/viewOrderItems";
+import EditSupplierItems from "./components/forms/EditSupplierItems";
 
 function App() {
   return (
@@ -21,16 +18,14 @@ function App() {
               <Switch>
                   <Route path="/addSupplier" component={addSupplier}  />
                   <Route path="/getSuppliers" component={getSuppliers}  />
+                  <Route path="/editSupplier/:id" component={EditSupplierAdmin}  />
+
                   <Route path="/addSupplierItems/:id" component={addSupplierItems}  />
                   <Route path="/getSupplierItems/:id" component={viewSupplierItem}  />
-                  <Route path="/editItem/:id" component={EditSupplierAdmin}  />
+                  <Route path="/editItem/:id" component={EditSupplierItems}  />
 
 
                   <Route path="/addPolicyOne" component={addPolicyOne}  />
-                  <Route path="/viewSuppliersPolicy" component={viewSuppliersPolicy}  />
-                  <Route path="/policyViewStockItem/:id" component={policyViewStockItem}  />
-                  <Route path="/viewOrder" component={viewOrder}  />
-                  <Route path="/orderViewStockItem/:id" component={viewOrderItems}  />
               </Switch>
             </section>
           </Router>

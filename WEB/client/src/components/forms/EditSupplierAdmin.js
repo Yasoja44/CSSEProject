@@ -34,17 +34,14 @@ const initialState = {
     image:'',
     progress:0,
     supplier:{},
-
-
     touched: {
         supplierName: false,
         supplierCompany: false,
         supplierSpeciality: false,
-        supplierPic: false,
     }
 }
 
-class EditCategoryAdmin extends Component {
+class EditSupplierAdmin extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);
@@ -59,16 +56,9 @@ class EditCategoryAdmin extends Component {
                 this.setState(
                     {
 
-                        // supplierName: response.data.data.supplierName,
-                        // supplierCompany: response.data.data.supplierCompany,
-                        // supplierSpeciality: response.data.data.supplierSpeciality,
-                        // supplierPic: response.data.data.supplierPic,
-
                         supplierName: response.data.supplierName,
                         supplierCompany: response.data.supplierCompany,
                         supplierSpeciality: response.data.supplierSpeciality,
-                        supplierPic: response.data.supplierPic,
-
 
                     });
             })
@@ -84,11 +74,8 @@ class EditCategoryAdmin extends Component {
                 image: e.target.files[0]
             })
 
-
-
         }
     };
-    //////////////////////
 
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value })
@@ -107,87 +94,41 @@ class EditCategoryAdmin extends Component {
             supplierSpeciality:'',
         };
         if (this.state.touched.supplierName && supplierName.length < 3)
-            errors.workout_name = 'Name should be >= 3 characters';
+            errors.supplierName = 'Name should be >= 3 characters';
 
         if (this.state.touched.supplierCompany && supplierCompany.length < 3)
-            errors.workout_theme = 'Company should be >= 3 characters';
+            errors.supplierCompany = 'Company should be >= 3 characters';
 
         if (this.state.touched.supplierSpeciality && supplierSpeciality.length < 3)
-            errors.workout_description = 'Speciality should be >= 3 characters';
+            errors.supplierSpeciality = 'Speciality should be >= 3 characters';
 
         return errors;
     }
-    async onSubmit(e) {
+
+
+    onSubmit(e) {
         e.preventDefault();
+      let  supplier={
+                supplierName: this.state.supplierName,
+                supplierCompany: this.state.supplierCompany,
+                supplierSpeciality: this.state.supplierSpeciality,
+
+        };
 
 
-
-        const uploadTask = storage.ref(`supplierImages/${this.state.image.name}`).put(this.state.image);
-        await uploadTask.on(
-            "state_changed",
-            snapshot => {
-                const progress = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                );
-
-                this.setState({
-                    progress: progress
-                });
-
-            },
-            error => {
-                console.log(error);
-            },
-            () => {
-                storage
-                    .ref("supplierImages")
-                    .child(this.state.image.name)
-                    .getDownloadURL()
-                    .then(url => {
-                        console.log(url);
-                        this.setState({
-                            supplier:{
-                                supplierName: this.state.supplierName,
-                                supplierCompany: this.state.supplierCompany,
-                                supplierSpeciality: this.state.supplierSpeciality,
-                                supplierPic: url
-                            }
-
-                        });
-
-                    }).then(()=>{this.submit2();});
-
-            }
-        )
-
+    if (this.state.supplierName.length < 3 || this.state.supplierSpeciality.length < 3 || this.state.supplierCompany.length < 3) {
+    this.validate(this.state.supplierName, this.state.supplierCompany, this.state.supplierSpeciality)
     }
-
-    submit2(){
-        if (this.state.supplierName.length < 3 || this.state.supplierSpeciality.length < 3 ||
-            this.state.supplierCompany.length < 3) {
-            this.validate(this.state.supplierName, this.state.supplierCompany, this.state.supplierSpeciality)
-            let message = "Supplier Creation Failed"
-            SubmissionFail(message);
-        } else {
-
-            // let supplier = {
-            //     supplierName: this.state.supplierName,
-            //     supplierCompany: this.state.supplierCompany,
-            //     supplierSpeciality: this.state.supplierSpeciality,
-            //     supplierPic: this.state.supplierPic
-            // };
-
-            // console.log("asdasd    "+this.state.supplier.supplierPic);
-
-            axios.put(`http://localhost:8080/api/item/${this.props.match.params.id}`,this.state.supplier)
+        else
+        {
+            axios.put(`http://localhost:8080/api/supplier/${this.props.match.params.id}`,supplier)
                 .then(response => {
-                    console.log('DATA TO SEND', this.state.supplier);
                     SubmissionAlert();
-
+                    window.location.replace("/getSuppliers");
                 })
                 .catch(error => {
                     console.log(error.message);
-                    SubmissionFail();
+                    alert(error.message)
                 })
         }
     }
@@ -199,7 +140,7 @@ class EditCategoryAdmin extends Component {
             <div className="workout_wrapper" style={{ borderTop: "10px solid black"}}>
                 <br/><br/>
                 <Form onSubmit={this.onSubmit}>
-                    <h1 className="workout_title">ADD SUPPLIER</h1>
+                    <h1 className="workout_title">Edit SUPPLIER</h1>
                     &nbsp;
                     <div className="row justify-content-md-center">
                         <FormGroup >
@@ -259,13 +200,13 @@ class EditCategoryAdmin extends Component {
                         </FormGroup>
                     </div>
 
-                    <div className="row justify-content-center">
-                        <div>
-                            {/*<FileBase type="file" multiple={false} onDone={({base64}) => this.state.supplierPic = base64} />*/}
-                            <input type="file" onChange={this.handleChange} />
+                    {/*<div className="row justify-content-center">*/}
+                    {/*    <div>*/}
+                    {/*        /!*<FileBase type="file" multiple={false} onDone={({base64}) => this.state.supplierPic = base64} />*!/*/}
+                    {/*        <input type="file" onChange={this.handleChange} />*/}
 
-                        </div>
-                    </div>
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     <button className="workout_button btn btn-primary">SUBMIT</button>
                 </Form>
@@ -275,4 +216,4 @@ class EditCategoryAdmin extends Component {
     }
 }
 
-export default EditCategoryAdmin;
+export default EditSupplierAdmin;

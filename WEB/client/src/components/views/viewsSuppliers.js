@@ -41,16 +41,16 @@ class viewsSuppliers extends Component {
     }
 
     deleteCategory(id){
-        axios.delete(`http://localhost:8080/suppliers/${id}`)
+        axios.delete(`http://localhost:8080/api/supplier/${id}`)
             .then(response => {
-                this.setState({ suppliers: response.data });
+                SubmissionAlert();
+                window.location.replace("/getSuppliers");
             })
-        SubmissionAlert();
-        window.location.replace("/adminViewStockCategory");
+
     }
 
     navigateEditStockCategoryPage(e, categoryStockId) {
-        window.location = `/editItem/${categoryStockId}`
+        window.location = `/editSupplier/${categoryStockId}`
     }
 
 

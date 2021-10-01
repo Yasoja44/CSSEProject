@@ -21,7 +21,7 @@ const getAllItem = async(req,res,next) => {
         const data = await supplierItems.get();
         const supplierItemsArray = [];
         if (data.empty){
-            res.status(404).send('No supplier record found')
+            res.status(200).send('No supplier record found')
         }else{
             data.forEach(doc =>{
                 const Item = new items(
@@ -47,7 +47,7 @@ const getOneItem = async(req,res,next) => {
         const item = await firestore.collection('items').doc(id);
         const data = await item.get();
         if (!data.exists){
-            res.status(404).send('No Item record found')
+            res.status(200).send('No Item record found')
         }else{
             res.send(data.data());
         }

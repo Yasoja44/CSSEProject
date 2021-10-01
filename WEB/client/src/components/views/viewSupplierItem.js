@@ -38,9 +38,10 @@ class AdminStockItemsView extends Component {
     }
 
     deleteItem(id) {
-        axios.delete(`http://localhost:8080/api/StockCategoryItem/${id}`)
+        axios.delete(`http://localhost:8080/api/item/${id}`)
             .then(response => {
-                this.setState({stockItems: response.data});
+                SubmissionAlert();
+                window.location.replace("/getSuppliers");
 
             })
         window.location.replace("/adminViewStockCategory");
@@ -48,7 +49,7 @@ class AdminStockItemsView extends Component {
     }
 
     navigateEditPage(e, itemId) {
-        window.location = `/adminEditStockItem/${itemId}`
+        window.location = `/editItem/${itemId}`
     }
 
     render() {
