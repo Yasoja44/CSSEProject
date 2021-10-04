@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">csseproject</string>
+    <string name="main_page_selected">%s page is selected</string>
+    <string name="ItemName">itemName</string>
+</resources>
