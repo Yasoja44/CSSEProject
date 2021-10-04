@@ -67,9 +67,13 @@ const lineCreate = async (items) => {
     let arrayItems = "";
     let n;
     for (n in items) {
-        let itemInfo = getOneItem(items[n].itemId);
+        //let itemInfo = getOneItem(items[n].itemId);
 
-        arrayItems += "<li>" + itemInfo.itemName +" "+ items[n].qty + "</li>";
+        const item = await firestore.collection('items').doc(items[n].itemId);
+        const data = await item.get();
+
+        console.log(data.data());
+        arrayItems += "<li>" + data.data().itemName +" "+ items[n].qty + "</li>";
     }
 
     return arrayItems;
@@ -82,8 +86,6 @@ const mailSend = async (req, res) => {
         let name = req.body.orderName;
         let total = req.body.total;
         let items = req.body.items;
-
-        let arrayItems = await lineCreate(items);
 
         var transporter = nodemailer.createTransport({
 
@@ -108,6 +110,8 @@ const mailSend = async (req, res) => {
         //     arrayItems += "<li>" + itemInfo.itemName +" "+ items[n].qty + "</li>";
         // }
 
+        let line = await lineCreate(items);
+
         var mailOptions = {
 
             from: 'hugoproducts119@gmail.com',
@@ -119,10 +123,9 @@ const mailSend = async (req, res) => {
             <h3 style="text-align: center; color: black;">Order:${name}.</h3>
             <h3 style="text-align: center; color: grey;">Total:${total}.</h3>
             
-            <h3 style="text-align: center; color: grey;">QTY:${arrayItems}.</h3>
+            <h3 style="text-align: center; color: grey;">Item:${line}.</h3>
 
-                
-
+             
             </div>`
         };
 
@@ -141,17 +144,6 @@ const mailSend = async (req, res) => {
     }
 }
 
-const getOneItem = async(id) => {
-    try{
-        const item = await firestore.collection('items').doc(id);
-        const data = await item.get();
-
-        return (data.data());
-
-    }catch(error){
-        res.status(400).send(error.message);
-    }
-}
 
 
 

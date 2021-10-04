@@ -8,6 +8,10 @@ import addSupplierItems from "./components/forms/addSupplierItems";
 import viewSupplierItem from "./components/views/viewSupplierItem";
 import EditSupplierAdmin from "./components/forms/EditSupplierAdmin";
 import EditSupplierItems from "./components/forms/EditSupplierItems";
+import viewSuppliersPolicy from "./components/views/viewSuppliersPolicy";
+import viewOrder from "./components/views/viewOrder";
+import viewOrderItems from "./components/views/viewOrderItems";
+import policyViewStockItem from "./components/views/viewSuppliersItemPolicy";
 
 function App() {
   return (
@@ -26,6 +30,10 @@ function App() {
 
 
                   <Route path="/addPolicyOne" component={addPolicyOne}  />
+                  <Route path="/viewSuppliersPolicy" component={viewSuppliersPolicy}  />
+                  <Route path="/policyViewStockItem/:id" component={policyViewStockItem}  />
+                  <Route path="/viewOrder" component={viewOrder}  />
+                  <Route path="/orderViewStockItem/:id" component={viewOrderItems}  />
               </Switch>
             </section>
           </Router>
