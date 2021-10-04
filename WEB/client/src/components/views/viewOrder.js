@@ -52,7 +52,7 @@ class viewOrder extends Component {
         window.location = `/orderViewStockItem/${categoryStockId}`
     }
 
-    async acceptOrder(e,id,name,total,orderId) {
+    async acceptOrder(e,id,name,total) {
 
         let order = {
             status:'Accepted',
@@ -69,8 +69,6 @@ class viewOrder extends Component {
 
         await this.getItems(id);
 
-        console.log(this.state.orderItems);
-
         let sent = {
             orderId: id,
             orderName: name,
@@ -81,7 +79,7 @@ class viewOrder extends Component {
         await axios.post('http://localhost:8080/api/order/mail', sent)
             .then(response => {
                 alert('Email Sent');
-                //window.location.reload(false);
+                window.location.reload(false);
             })
             .catch(error => {
                 console.log(error.message);

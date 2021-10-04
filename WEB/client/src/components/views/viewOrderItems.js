@@ -38,7 +38,8 @@ class viewOrderItems extends Component {
         this.state = {
             orderItems: [],
             itemsOfOrder: [],
-            temp:''
+            temp:'',
+            order:[],
         }
     }
 
@@ -53,6 +54,11 @@ class viewOrderItems extends Component {
         await axios.get(`http://localhost:8080/api/order/${this.props.match.params.id}`)
             .then(response => {
                 this.setState({temp: response.data.status});
+            })
+
+        await axios.get(`http://localhost:8080/api/order/${this.props.match.params.id}`)
+            .then(response => {
+                this.setState({order: response.data});
             })
 
 
@@ -74,24 +80,50 @@ class viewOrderItems extends Component {
 
 
 
-    acceptOrder() {
+    async acceptOrder(id,name,total) {
 
         let order = {
             status:'Accepted',
         };
 
-        axios.put(`http://localhost:8080/api/order/${this.props.match.params.id}`, order)
+        await axios.put(`http://localhost:8080/api/order/${this.props.match.params.id}`, order)
             .then(response => {
                 SubmissionAlert1();
-                window.location.reload(false);
+
             })
             .catch(error => {
                 console.log(error.message);
                 SubmissionFail();
             })
+
+        await this.getItems(this.props.match.params.id);
+
+        let sent = {
+            orderId: id,
+            orderName: name,
+            total: total,
+            items: this.state.orderItems
+        };
+
+        await axios.post('http://localhost:8080/api/order/mail', sent)
+            .then(response => {
+                alert('Email Sent');
+                window.location.reload(false);
+            })
+            .catch(error => {
+                console.log(error.message);
+                alert(error.message)
+            })
     }
 
-    declineOrder() {
+    async getItems(orderId){
+        await axios.get(`http://localhost:8080/api/getItemsByOrder/${orderId}`)
+            .then(response => {
+                this.setState({orderItems: response.data});
+            })
+    }
+
+    declineOrder(id) {
 
         let order = {
             status:'Declined',
@@ -100,7 +132,7 @@ class viewOrderItems extends Component {
         axios.put(`http://localhost:8080/api/order/${this.props.match.params.id}`, order)
             .then(response => {
                 SubmissionAlert2();
-                window.location.reload(false);
+
             })
             .catch(error => {
                 console.log(error.message);
@@ -153,16 +185,20 @@ class viewOrderItems extends Component {
                                         </Card>
                                     </Col>
                                 ))}
+
+
                             </Row>
+                            <br/>
+                            <button className="btn btn-warning "
+                                    onClick={e => this.acceptOrder(this.props.match.params.id,this.state.order.orderName,this.state.order.total)}>Accept
+                            </button>&nbsp;&nbsp;
+                            <button className="btn btn-danger "
+                                    onClick={e => this.declineOrder(this.props.match.params.id)}>Decline
+                            </button>
                         </div>
                     </div>
                 </div>
-                {/*<button className="btn btn-warning "*/}
-                {/*        onClick={this.acceptOrder()}>Accept*/}
-                {/*</button>*/}
-                {/*<button className="btn btn-danger "*/}
-                {/*        onClick={this.declineOrder()}>Decline*/}
-                {/*</button>*/}
+
             </div>
         )
     }
