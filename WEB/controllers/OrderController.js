@@ -2,6 +2,7 @@
 
 const firebase = require('../db');
 const order = require('../models/orderModel');
+const nodemailer = require("nodemailer");
 const firestore = firebase.firestore();
 
 
@@ -62,6 +63,96 @@ const updateOrder= async(req,res,next) => {
     }
 }
 
+const lineCreate = async (items) => {
+    let arrayItems = "";
+    let n;
+    for (n in items) {
+        let itemInfo = getOneItem(items[n].itemId);
+
+        arrayItems += "<li>" + itemInfo.itemName +" "+ items[n].qty + "</li>";
+    }
+
+    return arrayItems;
+}
+
+const mailSend = async (req, res) => {
+
+    try {
+        let id = req.body.orderId;
+        let name = req.body.orderName;
+        let total = req.body.total;
+        let items = req.body.items;
+
+        let arrayItems = await lineCreate(items);
+
+        var transporter = nodemailer.createTransport({
+
+            service: 'Gmail',
+            auth: {
+                user: 'hugoproducts119@gmail.com',
+                pass: '123hugo@12'
+            },
+
+            tls: {
+                rejectUnauthorized: false
+            },
+        });
+
+
+
+        // let arrayItems = "";
+        // let n;
+        // for (n in items) {
+        //     let itemInfo = getOneItem(items[n].itemId);
+        //
+        //     arrayItems += "<li>" + itemInfo.itemName +" "+ items[n].qty + "</li>";
+        // }
+
+        var mailOptions = {
+
+            from: 'hugoproducts119@gmail.com',
+            to: 'yasoja44@gmail.com',
+            subject: 'Supply Order',
+            html: `
+            <div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
+            <h2 style="text-align: center; color: black;">ID:${id}.</h2>
+            <h3 style="text-align: center; color: black;">Order:${name}.</h3>
+            <h3 style="text-align: center; color: grey;">Total:${total}.</h3>
+            
+            <h3 style="text-align: center; color: grey;">QTY:${arrayItems}.</h3>
+
+                
+
+            </div>`
+        };
+
+        await transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+
+        res.status(200).json({auth_token: 'token'})
+    } catch (e) {
+        console.log(e.message);
+        return res.status(500).json({msg: "server Error..."});
+    }
+}
+
+const getOneItem = async(id) => {
+    try{
+        const item = await firestore.collection('items').doc(id);
+        const data = await item.get();
+
+        return (data.data());
+
+    }catch(error){
+        res.status(400).send(error.message);
+    }
+}
+
 
 
 module.exports = {
@@ -69,5 +160,6 @@ module.exports = {
     getAllOrders,
     getOneOrder,
     updateOrder,
+    mailSend
 
 }

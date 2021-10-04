@@ -36,7 +36,8 @@ class viewOrder extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            orders: []
+            orders: [],
+            orderItems:[]
         }
     }
 
@@ -51,20 +52,49 @@ class viewOrder extends Component {
         window.location = `/orderViewStockItem/${categoryStockId}`
     }
 
-    acceptOrder(e,id) {
+    async acceptOrder(e,id,name,total,orderId) {
 
         let order = {
             status:'Accepted',
         };
 
-        axios.put(`http://localhost:8080/api/order/${id}`, order)
+        await axios.put(`http://localhost:8080/api/order/${id}`, order)
             .then(response => {
                 SubmissionAlert1();
-                window.location.reload(false);
+                //window.location.reload(false);
+            }).catch(error => {
+                console.log(error.message);
+                SubmissionFail();
+            })
+
+        await this.getItems(id);
+
+        console.log(this.state.orderItems);
+
+        let sent = {
+            orderId: id,
+            orderName: name,
+            total: total,
+            items: this.state.orderItems
+        };
+
+        await axios.post('http://localhost:8080/api/order/mail', sent)
+            .then(response => {
+                alert('Email Sent');
+                //window.location.reload(false);
             })
             .catch(error => {
                 console.log(error.message);
-                SubmissionFail();
+                alert(error.message)
+            })
+
+
+    }
+
+    async getItems(orderId){
+        await axios.get(`http://localhost:8080/api/getItemsByOrder/${orderId}`)
+            .then(response => {
+                this.setState({orderItems: response.data});
             })
     }
 
@@ -115,7 +145,7 @@ class viewOrder extends Component {
                                             </Card.Body>
                                             <Card.Footer className="item-footer-button">
                                                 <button className="btn btn-primary" onClick={e => this.navigateViewItemsPage(e,item.id)}>Items</button>&nbsp;&nbsp;
-                                                <button className="btn btn-warning" onClick={e => this.acceptOrder(e,item.id)}>Accept</button>&nbsp;&nbsp;
+                                                <button className="btn btn-warning" onClick={e => this.acceptOrder(e,item.id,item.orderName,item.Total)}>Accept</button>&nbsp;&nbsp;
                                                 <button className="btn btn-danger" onClick={e => this.declineOrder(e,item.id)}>Decline</button>
                                             </Card.Footer>
                                         </Card>

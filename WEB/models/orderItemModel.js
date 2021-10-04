@@ -1,11 +1,10 @@
 class OrderItem{
-    constructor(id,OrderId,itemId,itemName,qty,sub_total){
+    constructor(id,orderId,itemId,qty,subTotal){
         this.id = id;
-        this.OrderId = OrderId;
+        this.orderId = orderId;
         this.itemId = itemId;
-        this.itemName = itemName;
         this.qty = qty;
-        this.sub_total = sub_total;
+        this.subTotal = subTotal;
     }
 }
 
