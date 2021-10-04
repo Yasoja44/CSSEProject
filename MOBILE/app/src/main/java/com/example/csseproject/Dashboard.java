@@ -23,7 +23,7 @@ public class Dashboard extends AppCompatActivity {
         supplier1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                startActivity(new Intent(getApplicationContext(),Changeprofile.class));
             }
         });
         orders1.setOnClickListener(new View.OnClickListener() {
