@@ -52,7 +52,12 @@ class viewOrder extends Component {
         window.location = `/orderViewStockItem/${categoryStockId}`
     }
 
-    async acceptOrder(e,id,name,total) {
+    async acceptOrder(e,id,name,total,sID) {
+
+        await axios.get(`http://localhost:8080/api/supplier/${sID}`)
+            .then(response => {
+                this.setState({supplierEmail: response.data.supplierEmail});
+            })
 
         let order = {
             status:'Accepted',
@@ -73,7 +78,8 @@ class viewOrder extends Component {
             orderId: id,
             orderName: name,
             total: total,
-            items: this.state.orderItems
+            items: this.state.orderItems,
+            email:this.state.supplierEmail
         };
 
         await axios.post('http://localhost:8080/api/order/mail', sent)
@@ -143,7 +149,7 @@ class viewOrder extends Component {
                                             </Card.Body>
                                             <Card.Footer className="item-footer-button">
                                                 <button className="btn btn-primary" onClick={e => this.navigateViewItemsPage(e,item.id)}>Items</button>&nbsp;&nbsp;
-                                                <button className="btn btn-warning" onClick={e => this.acceptOrder(e,item.id,item.orderName,item.Total)}>Accept</button>&nbsp;&nbsp;
+                                                <button className="btn btn-warning" onClick={e => this.acceptOrder(e,item.id,item.orderName,item.Total,item.supplierId)}>Accept</button>&nbsp;&nbsp;
                                                 <button className="btn btn-danger" onClick={e => this.declineOrder(e,item.id)}>Decline</button>
                                             </Card.Footer>
                                         </Card>

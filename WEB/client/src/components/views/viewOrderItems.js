@@ -39,7 +39,10 @@ class viewOrderItems extends Component {
             orderItems: [],
             itemsOfOrder: [],
             temp:'',
-            order:[],
+            name:'',
+            total:'',
+            supId:'',
+            supplierEmail:''
         }
     }
 
@@ -53,7 +56,12 @@ class viewOrderItems extends Component {
 
         await axios.get(`http://localhost:8080/api/order/${this.props.match.params.id}`)
             .then(response => {
-                this.setState({temp: response.data.status});
+                this.setState({
+                    temp: response.data.status,
+                    name: response.data.orderName,
+                    total: response.data.Total,
+                    supId: response.data.supplierId,
+                });
             })
 
         await axios.get(`http://localhost:8080/api/order/${this.props.match.params.id}`)
@@ -98,11 +106,18 @@ class viewOrderItems extends Component {
 
         await this.getItems(this.props.match.params.id);
 
+
+        await axios.get(`http://localhost:8080/api/supplier/${this.state.supId}`)
+            .then(response => {
+                this.setState({supplierEmail: response.data.supplierEmail});
+            })
+
         let sent = {
             orderId: id,
             orderName: name,
             total: total,
-            items: this.state.orderItems
+            items: this.state.orderItems,
+            email:this.state.supplierEmail
         };
 
         await axios.post('http://localhost:8080/api/order/mail', sent)
@@ -190,7 +205,7 @@ class viewOrderItems extends Component {
                             </Row>
                             <br/>
                             <button className="btn btn-warning "
-                                    onClick={e => this.acceptOrder(this.props.match.params.id,this.state.order.orderName,this.state.order.total)}>Accept
+                                    onClick={e => this.acceptOrder(this.props.match.params.id,this.state.name,this.state.total)}>Accept
                             </button>&nbsp;&nbsp;
                             <button className="btn btn-danger "
                                     onClick={e => this.declineOrder(this.props.match.params.id)}>Decline

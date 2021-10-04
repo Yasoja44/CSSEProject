@@ -1,5 +1,5 @@
 class Order{
-    constructor(id,orderName,supplierName,status,deliveryStatus,confirmation,Total){
+    constructor(id,orderName,supplierName,status,deliveryStatus,confirmation,Total,supplierId){
         this.id = id;
         this.orderName = orderName;
         this.supplierName = supplierName;
@@ -7,6 +7,7 @@ class Order{
         this.deliveryStatus = deliveryStatus;
         this.confirmation = confirmation;
         this.Total = Total;
+        this.supplierId = supplierId;
     }
 }
 

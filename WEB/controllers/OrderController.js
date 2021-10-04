@@ -23,7 +23,8 @@ const getAllOrders = async(req,res,next) => {
                     doc.data().status,
                     doc.data().deliveryStatus,
                     doc.data().confirmation,
-                    doc.data().Total
+                    doc.data().Total,
+                    doc.data().supplierId
                 );
                 orderArray.push(Order);
             });
@@ -72,7 +73,7 @@ const lineCreate = async (items) => {
         const item = await firestore.collection('items').doc(items[n].itemId);
         const data = await item.get();
 
-        console.log(data.data());
+
         arrayItems += "<li>" + data.data().itemName +" "+ items[n].qty + "</li>";
     }
 
@@ -86,6 +87,9 @@ const mailSend = async (req, res) => {
         let name = req.body.orderName;
         let total = req.body.total;
         let items = req.body.items;
+        let email = req.body.email;
+
+        console.log(email);
 
         var transporter = nodemailer.createTransport({
 
@@ -114,8 +118,9 @@ const mailSend = async (req, res) => {
 
         var mailOptions = {
 
+
             from: 'hugoproducts119@gmail.com',
-            to: 'yasoja44@gmail.com',
+            to: email,
             subject: 'Supply Order',
             html: `
             <div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
