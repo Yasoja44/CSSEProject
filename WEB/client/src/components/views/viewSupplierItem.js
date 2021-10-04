@@ -68,7 +68,7 @@ class AdminStockItemsView extends Component {
                                                     <h2 className="item_title">{item.itemName}</h2>&nbsp;<h4 className="price_item">Rs:&nbsp;{item.itemPrice}</h4>
                                                 </Card.Title>
                                                 <Card.Text>
-                                                    <h4 style={{color:"darkblue"}}>Suppliers: {item.itemPolicyFlag}</h4>
+                                                    <h4 style={{color:"darkblue"}}>Speciality: {item.itemPolicyFlag}</h4>
                                                 </Card.Text>
                                             </Card.Body>
                                             <Card.Footer>

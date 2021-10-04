@@ -126,7 +126,7 @@ class addSupplier extends Component {
         if (this.state.touched.itemName && itemName.length < 3)
             errors.itemName = 'Name should be >= 3 characters';
 
-        if (this.state.touched.itemPrice && itemPrice.length < 3)
+        if (this.state.touched.itemPrice && itemPrice.length < 1)
             errors.itemPrice = 'Company should be >= 3 characters';
 
 
@@ -178,7 +178,7 @@ class addSupplier extends Component {
     }
 
     submit2(){
-        if ( this.state.itemName.length < 3 || this.state.itemPrice.length < 3) {
+        if ( this.state.itemName.length < 3 || this.state.itemPrice.length < 1) {
             this.validate( this.state.itemName, this.state.itemPrice)
             let message = "Item Creation Failed"
             SubmissionFail2(message);
