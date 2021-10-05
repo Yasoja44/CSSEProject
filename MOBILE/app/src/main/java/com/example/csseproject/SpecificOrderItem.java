@@ -44,9 +44,9 @@ public class SpecificOrderItem extends AppCompatActivity {
         btn1=findViewById(R.id.btn_view_order_items);
         btn2=findViewById(R.id.btn_inquiry);
 
-        if(status.equals("Approved")){
+        if(status.equals("Accepted")){
             imageView.setImageResource(R.drawable.green);
-        }else if(status.equals("Decline")) {
+        }else if(status.equals("Declined")) {
             imageView.setImageResource(R.drawable.red);
         }else if(status.equals("Pending")) {
             imageView.setImageResource(R.drawable.orange);

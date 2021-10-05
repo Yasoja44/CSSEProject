@@ -139,8 +139,8 @@ public class ViewOrderItem extends AppCompatActivity implements View.OnClickList
                             String status=documentSnapshot.getString("status");
                             String total=documentSnapshot.getString("Total");
 
-                            if(status.equals("approved") || status.equals("Approved")){
-                                Status.setText("Approved");
+                            if(status.equals("Accepted") || status.equals("accepted")){
+                                Status.setText("Accepted ");
                                 Status.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
                             }else if(status.equals("Declined")||status.equals("declined")) {
                                 Status.setText("Declined");

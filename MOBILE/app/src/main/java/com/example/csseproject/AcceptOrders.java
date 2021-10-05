@@ -73,7 +73,7 @@ public class AcceptOrders extends AppCompatActivity {
                         for(QueryDocumentSnapshot ds:task.getResult()){
 
                             String status=ds.getString("status");
-                            if(status.equals("Approved")){
+                            if(status.equals("Accepted")){
                                 String id =ds.getId();
                                 String Total=ds.getString("Total");
                                 String deliveryStatus=ds.getString("deliveryStatus");

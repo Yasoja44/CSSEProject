@@ -117,22 +117,5 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                SharedPreferences preferences=getSharedPreferences("Checkbox",MODE_PRIVATE);
-                SharedPreferences.Editor editor=preferences.edit();
-                editor.putString("remember","false");
-                editor.apply();
-
-                Toast.makeText(MainActivity.this, "Thank You Come Again Log Out...", Toast.LENGTH_SHORT).show();
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), Login.class));
-                finish();
-
-            }
-        });
-
     }
 }

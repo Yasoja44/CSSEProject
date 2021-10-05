@@ -54,9 +54,9 @@ public class OrderIViewHolder extends RecyclerView.Adapter<OrderIViewHolder.Orde
         String confirmed=order.getConfirmation();
         String supplierId=order.getSupplierId();
 
-        if(status.equals("Approved")){
+        if(status.equals("Accepted")){
             holder.imageView_order.setImageResource(R.drawable.green);
-        }else if(status.equals("Decline")) {
+        }else if(status.equals("Declined")) {
             holder.imageView_order.setImageResource(R.drawable.red);
         }else if(status.equals("Pending")) {
             holder.imageView_order.setImageResource(R.drawable.orange);
