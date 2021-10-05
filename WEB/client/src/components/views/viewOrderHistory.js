@@ -14,25 +14,9 @@ const SubmissionAlert1 = () => {
     });
 }
 
-const SubmissionAlert2 = () => {
-    swat.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Order Declined!',
-        showConfirmButton: false,
-        timer: 3000
-    });
-}
 
-const SubmissionFail = (message) => {
-    swat.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: message
-    })
-}
 
-class viewOrder extends Component {
+class viewOrderHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -42,81 +26,14 @@ class viewOrder extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8080/api/orderPending')
+        axios.get('http://localhost:8080/api/orders')
             .then(response => {
                 this.setState({orders: response.data });
             })
     }
 
     navigateViewItemsPage(e, categoryStockId) {
-        window.location = `/orderViewStockItem/${categoryStockId}`
-    }
-
-    async acceptOrder(e,id,name,total,sID) {
-
-        await axios.get(`http://localhost:8080/api/supplier/${sID}`)
-            .then(response => {
-                this.setState({supplierEmail: response.data.supplierEmail});
-            })
-
-        let order = {
-            status:'Accepted',
-        };
-
-        await axios.put(`http://localhost:8080/api/order/${id}`, order)
-            .then(response => {
-                SubmissionAlert1();
-                //window.location.reload(false);
-            }).catch(error => {
-                console.log(error.message);
-                SubmissionFail();
-            })
-
-        await this.getItems(id);
-
-        let sent = {
-            orderId: id,
-            orderName: name,
-            total: total,
-            items: this.state.orderItems,
-            email:this.state.supplierEmail
-        };
-
-        await axios.post('http://localhost:8080/api/order/mail', sent)
-            .then(response => {
-                alert('Email Sent');
-                window.location.reload(false);
-            })
-            .catch(error => {
-                console.log(error.message);
-                alert(error.message)
-            })
-
-
-    }
-
-    async getItems(orderId){
-        await axios.get(`http://localhost:8080/api/getItemsByOrder/${orderId}`)
-            .then(response => {
-                this.setState({orderItems: response.data});
-            })
-    }
-
-    declineOrder(e,id) {
-
-        let order = {
-            status:'Declined',
-        };
-
-        axios.put(`http://localhost:8080/api/order/${id}`, order)
-            .then(response => {
-                SubmissionAlert2();
-                window.location.reload(false);
-            })
-            .catch(error => {
-                console.log(error.message);
-                SubmissionFail();
-            })
+        window.location = `/orderViewStockItemHistory/${categoryStockId}`
     }
 
 
@@ -149,8 +66,6 @@ class viewOrder extends Component {
                                             </Card.Body>
                                             <Card.Footer className="item-footer-button">
                                                 <button className="btn btn-primary" onClick={e => this.navigateViewItemsPage(e,item.id)}>Items</button>&nbsp;&nbsp;
-                                                <button className="btn btn-warning" onClick={e => this.acceptOrder(e,item.id,item.orderName,item.Total,item.supplierId)}>Accept</button>&nbsp;&nbsp;
-                                                <button className="btn btn-danger" onClick={e => this.declineOrder(e,item.id)}>Decline</button>
                                             </Card.Footer>
                                         </Card>
                                         <br/>
@@ -165,4 +80,4 @@ class viewOrder extends Component {
     }
 }
 
-export default viewOrder;
+export default viewOrderHistory;

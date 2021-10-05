@@ -11,7 +11,7 @@ const initialState = {
     id: '',
     policyOnePrice: '',
     policyOnes:[],
-
+    current:'',
 
     touched: {
         policyOnePrice: false,
@@ -54,41 +54,19 @@ class addPolicyOne extends Component {
 
     }
 
-    componentDidMount() {
-        // const token = localStorage.getItem('token');
-        // if (!token) {
-        //     this.setState({
-        //         user: null
-        //     });
-        //     return;
-        // }
-        // this.setState({
-        //     token: token
-        // })
-        // axios({
-        //     method: 'get',
-        //     url: 'http://localhost:5000/users/',
-        //     headers: {
-        //         Authorization: token
-        //     },
-        //     data: {}
-        // }).then(res => {
-        //     this.setState({
-        //         workout_creator:res.data._id,
-        //         fName:res.data.firstName,
-        //         lName:res.data.lastName,
-        //         isLoggedIn:true
-        //     })
-        // }).catch(err => {
-        //     console.log(err.message);
-        // });
+    async componentDidMount() {
 
-        axios.get(`http://localhost:8080/api/policyOnes`)
+
+        await axios.get(`http://localhost:8080/api/policyOnes`)
             .then(response => {
                 this.setState({ policyOnes: response.data });
             }).then(()=>{
                 console.log(this.state.policyOnes);
         })
+
+        if(this.state.policyOnes.length > 0){
+            this.setState({ current: this.state.policyOnes[0].policyOnePrice});
+        }
     }
 
 
@@ -179,6 +157,7 @@ class addPolicyOne extends Component {
                                     name="policyOnePrice"
                                     id="policyOnePrice"
                                     size="100"
+                                    placeholder={this.state.current}
                                     value={this.state.policyOnePrice}
                                     onChange={this.onChange}
                                     valid={errors.policyOnePrice === ''}

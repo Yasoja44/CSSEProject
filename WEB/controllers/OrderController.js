@@ -34,6 +34,35 @@ const getAllOrders = async(req,res,next) => {
     }
 }
 
+const getAllItemsPending = async(req,res,next) => {
+    try{
+        const orders1 = await firestore.collection('orders').where('status','==',"Pending");
+        const data1 = await orders1.get();
+        console.log(data1)
+        const orderArray1 = [];
+        if (data1.empty){
+            res.status(404).send('No order record found')
+        }else{
+            data1.forEach(doc =>{
+                const Order1 = new order(
+                    doc.id,
+                    doc.data().orderName,
+                    doc.data().supplierName,
+                    doc.data().status,
+                    doc.data().deliveryStatus,
+                    doc.data().confirmation,
+                    doc.data().Total,
+                    doc.data().supplierId
+                );
+                orderArray1.push(Order1);
+            });
+            res.send(orderArray1);
+        }
+    }catch(error){
+        res.status(400).send(error.message);
+    }
+}
+
 const getOneOrder = async(req,res,next) => {
     try{
         const id = req.params.id;
@@ -152,6 +181,7 @@ module.exports = {
     getAllOrders,
     getOneOrder,
     updateOrder,
-    mailSend
+    mailSend,
+    getAllItemsPending
 
 }
