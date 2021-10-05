@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.csseproject">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Csseproject">
+        <activity
+            android:name=".CartActivity"
+            android:exported="true" />
         <activity
             android:name=".UpdateProfile"
             android:exported="true" />
@@ -23,18 +28,18 @@
             android:exported="true" />
         <activity
             android:name=".Login"
-            android:exported="true" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Registration"
             android:exported="true" />
         <activity android:name=".AcceptOrders" />
-        <activity android:name=".Dashboard"/>
+        <activity android:name=".Dashboard" />
         <activity android:name=".AddInquiry" />
         <activity android:name=".ViewOrderItem" />
         <activity android:name=".CheckItemsOrder" />
@@ -45,7 +50,5 @@
         <activity android:name=".ItemView" />
         <activity android:name=".MainActivity" />
     </application>
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
