@@ -5,6 +5,8 @@ import swat from "sweetalert2";
 import {Form, FormGroup, Label, Input, FormFeedback} from 'reactstrap';
 import '../css/workout.css';
 
+import mySingleton from "../singleton/policyOne"
+
 
 
 const initialState = {
@@ -57,12 +59,17 @@ class addPolicyOne extends Component {
     async componentDidMount() {
 
 
+
+
         await axios.get(`http://localhost:8080/api/policyOnes`)
             .then(response => {
                 this.setState({ policyOnes: response.data });
             }).then(()=>{
                 console.log(this.state.policyOnes);
         })
+
+        // let singleA = mySingleton.getInstance();
+        // console.log(singleA);
 
         if(this.state.policyOnes.length > 0){
             this.setState({ current: this.state.policyOnes[0].policyOnePrice});

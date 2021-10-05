@@ -50,45 +50,22 @@ class Header extends Component {
     profileLink = e => {
         window.location.replace('/profile');
     }
-    AddUser = e => {
-        window.location.replace('/adminReg');
-    }
-    ViewUsers = e => {
-        window.location.replace('/getAll');
-    }
-    AddStock = e => {
-        window.location.replace('/adminCreateStockCategory');
-    }
-    ViewStock = e => {
-        window.location.replace('/adminViewStockCategory');
-    }
+
     AddSupplier = e => {
-        window.location.replace('/adminCreateSuppliers');
+        window.location.replace('/addSupplier');
     }
     ViewSupplier = e => {
-        window.location.replace('/adminViewSuppliers');
+        window.location.replace('/getSuppliers');
     }
-    // AddCategory = e => {
-    //     window.location.replace('#');
-    // }
-    // ViewCategory = e => {
-    //     window.location.replace('#');
-    // }
-    AddCWorkout = e => {
-        window.location.replace('/workout');
+
+    NewOrders = e => {
+        window.location.replace('/viewOrder');
     }
-    ViewWorkout = e => {
-        window.location.replace('/workoutEmployeeShow');
+    ViewOrdersHistory = e => {
+        window.location.replace('/viewOrderHistory');
     }
-    BuyWorkout = e => {
-        window.location.replace('/question');
-    }
-    ViewWorkoutUser = e => {
-        window.location.replace('/workoutUserShow/'+this.state.id);
-    }
-    ViewAllWorkoutUser= e => {
-        window.location.replace('/workoutUserAllShow');
-    }
+
+
 
     componentDidMount() {
         const token = localStorage.getItem('token');
@@ -159,15 +136,15 @@ class Header extends Component {
                                 <li className="nav-item dropdown">
                                     <UncontrolledDropdown nav>
                                         <DropdownToggle nav caret>
-                                            Stock
+                                            Supplier
                                         </DropdownToggle>
                                         <DropdownMenu>
-                                            <DropdownItem onClick={this.AddStock}>
-                                                Add Stock
+                                            <DropdownItem onClick={this.AddSupplier}>
+                                                Add Supplier
                                             </DropdownItem>
                                             <DropdownItem divider/>
-                                            <DropdownItem onClick={this.ViewStock}>
-                                                View Stock
+                                            <DropdownItem onClick={this.ViewSupplier}>
+                                                View Supplier
                                             </DropdownItem>
                                         </DropdownMenu>
                                     </UncontrolledDropdown>
@@ -175,18 +152,47 @@ class Header extends Component {
                                 <li className="nav-item dropdown">
                                     <UncontrolledDropdown nav>
                                         <DropdownToggle nav caret>
-                                            Users
+                                            Orders
                                         </DropdownToggle>
                                         <DropdownMenu>
-                                            <DropdownItem onClick={this.AddUser}>
-                                                Add User
+                                            <DropdownItem onClick={this.NewOrders}>
+                                                New Orders
                                             </DropdownItem>
                                             <DropdownItem divider/>
-                                            <DropdownItem onClick={this.ViewUsers}>
-                                                View Users Details
+                                            <DropdownItem onClick={this.ViewOrdersHistory}>
+                                                History
                                             </DropdownItem>
                                         </DropdownMenu>
                                     </UncontrolledDropdown>
+                                </li>
+
+
+
+                            </ul>
+                            :
+                            null
+                        }
+                        {localStorage.getItem('userPosition') === "manager" ?
+                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li className="nav-item">
+                                    <a className="nav-link active" aria-current="page"
+                                       href="/employee">Home</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/addPolicyOne">PolicyOne</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/viewSuppliersPolicy">View Suppliers</a>
+                                </li>
+                            </ul>
+                            :
+                            null
+                        }
+                        {localStorage.getItem('userPosition') === "accountant" ?
+                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li className="nav-item">
+                                    <a className="nav-link active" aria-current="page"
+                                       href="/user">Home</a>
                                 </li>
                                 <li className="nav-item dropdown">
                                     <UncontrolledDropdown nav>
@@ -199,101 +205,12 @@ class Header extends Component {
                                             </DropdownItem>
                                             <DropdownItem divider/>
                                             <DropdownItem onClick={this.ViewSupplier}>
-                                                View Suppliers
+                                                View Supplier
                                             </DropdownItem>
                                         </DropdownMenu>
                                     </UncontrolledDropdown>
                                 </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/createStore">Add Store</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/workoutAdminShow">View Workout</a>
-                                </li>
-                                {/*<li className="nav-item dropdown">*/}
-                                {/*    <UncontrolledDropdown nav>*/}
-                                {/*        <DropdownToggle nav caret>*/}
-                                {/*            Item Category*/}
-                                {/*        </DropdownToggle>*/}
-                                {/*        <DropdownMenu>*/}
-                                {/*            <DropdownItem onClick={this.AddCategory}>*/}
-                                {/*                Add Item Category*/}
-                                {/*            </DropdownItem>*/}
-                                {/*            <DropdownItem divider/>*/}
-                                {/*            <DropdownItem onClick={this.ViewCategory}>*/}
-                                {/*                View Item Category*/}
-                                {/*            </DropdownItem>*/}
-                                {/*        </DropdownMenu>*/}
-                                {/*    </UncontrolledDropdown>*/}
-                                {/*</li>*/}
-                            </ul>
-                            :
-                            null
-                        }
-                        {localStorage.getItem('userPosition') === "manager" ?
-                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page"
-                                       href="/employee">Home</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/adminViewStockCategory">View Stock</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/empViewStore">View Store</a>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <UncontrolledDropdown nav>
-                                        <DropdownToggle nav caret>
-                                            Workout
-                                        </DropdownToggle>
-                                        <DropdownMenu>
-                                            <DropdownItem onClick={this.AddCWorkout}>
-                                                Add Workout
-                                            </DropdownItem>
-                                            <DropdownItem divider/>
-                                            <DropdownItem onClick={this.ViewWorkout}>
-                                                View Workout
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </UncontrolledDropdown>
-                                </li>
-                            </ul>
-                            :
-                            null
-                        }
-                        {localStorage.getItem('userPosition') === "accountant" ?
-                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page"
-                                       href="/user">Home</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/viewStore">Store</a>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <UncontrolledDropdown nav>
-                                        <DropdownToggle nav caret>
-                                            Workout
-                                        </DropdownToggle>
-                                        <DropdownMenu>
-                                            <DropdownItem onClick={this.BuyWorkout}>
-                                                Buy Workout
-                                            </DropdownItem>
-                                            <DropdownItem divider/>
-                                            <DropdownItem onClick={this.ViewWorkoutUser}>
-                                                My Workout
-                                            </DropdownItem>
-                                            <DropdownItem divider/>
-                                            <DropdownItem onClick={this.ViewAllWorkoutUser}>
-                                                All Workouts
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </UncontrolledDropdown>
-                                </li>
-                                {/*<li className="nav-item">*/}
-                                {/*    <a className="nav-link" href="#">Cart</a>*/}
-                                {/*</li>*/}
+
                             </ul>
                             :
                             null
