@@ -5,7 +5,7 @@ const assert = require('assert');
 dotnev.config();
 
 const{
-    PORT,
+    UPORT,
     HOST,
     HOST_URL,
     API_KEY,
@@ -17,11 +17,11 @@ const{
     APP_ID
 } = process.env;
 
-assert(PORT,'PORT is reqired');
+assert(UPORT,'PORT is reqired');
 assert(HOST,'HOST is reqired');
 
 module.exports={
-    port:PORT,
+    port:UPORT,
     host:HOST,
     url:HOST_URL,
     firebaseConfig :{
